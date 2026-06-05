@@ -1,0 +1,23 @@
+Prochaines améliorations possibles
+Choisis celle que tu veux :
+
+1. 📊 Graphique des ventes mensuelles
+Ajouter un graphique (Recharts) dans le Dashboard V2 pour visualiser l'évolution du CA sur 12 mois.
+
+2. 📧 Relances automatiques par email
+Configurer l'envoi automatique de rappels aux clients impayés (à 30, 60, 90 jours).
+
+3. 📈 Balance âgée clients
+Tableau détaillant les créances par tranche d'âge (<30j, 30-60j, 60-90j, >90j).
+
+4. 💰 Amortissements du matériel
+Gérer les amortissements des immobilisations (autoréfracteur, frontofocomètre, etc.).
+
+5. 📎 Export Excel des écritures comptables
+Exporter toutes les écritures pour l'expert-comptable (format Excel).
+
+6. 🏭 Plan comptable complet (Norme marocaine)
+Interface pour gérer les comptes comptables (Classe 1 à 7).
+
+7. 🔔 Alertes et notifications
+Système d'alertes pour : stocks bas, factures impayées, échéances TVA.

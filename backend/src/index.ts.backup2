@@ -1,0 +1,46 @@
+import "reflect-metadata";
+import express from "express";
+import { config } from "dotenv";
+import { AppDataSource } from "./infrastructure/database/data-source";
+
+config();
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.use(express.json());
+
+app.get("/health", (req, res) => {
+  res.json({ status: "OK", timestamp: new Date().toISOString() });
+});
+
+// Route pour tester la DB
+app.get("/db-status", async (req, res) => {
+  try {
+    const isConnected = AppDataSource.isInitialized;
+    res.json({ 
+      database: isConnected ? "connected" : "disconnected",
+      message: isConnected ? "? Base de donn?es connect?e" : "? Base de donn?es non connect?e"
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Erreur de connexion ? la DB" });
+  }
+});
+
+// Initialiser la base de donn?es avant de d?marrer le serveur
+AppDataSource.initialize()
+  .then(() => {
+    console.log("? Database connected");
+    app.listen(PORT, () => {
+      console.log(`?? Server running on http://localhost:${PORT}`);
+      console.log(`?? Health check: http://localhost:${PORT}/health`);
+      console.log(`???  DB Status: http://localhost:${PORT}/db-status`);
+    });
+  })
+  .catch((error) => {
+    console.error("? Database connection failed:", error);
+    console.log("??  Server will start without database...");
+    app.listen(PORT, () => {
+      console.log(`?? Server running on http://localhost:${PORT} (without DB)`);
+    });
+  });

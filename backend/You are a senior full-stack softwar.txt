@@ -1,0 +1,210 @@
+You are a senior full-stack software architect, SaaS expert, and ERP specialist.
+
+Your mission is to design and start building a production-ready, multi-tenant SaaS ERP application for optical stores (opticiens), fully adapted to Moroccan business, accounting, and tax regulations.
+
+---
+
+# 🎯 OBJECTIVE
+
+Design a modular, scalable SaaS ERP system for optical shops including:
+
+- Inventory management
+- Sales & purchase workflows
+- Optical prescription management
+- Client management (CRM)
+- Payments system
+- Moroccan accounting compliance
+- VAT (TVA) reporting and declarations
+- Analytics and reporting dashboard
+
+---
+
+# 🧩 CORE DOMAIN LOGIC
+
+## 1. Product Types
+
+The system must support two product categories:
+
+### A. Optical lenses (verres correcteurs)
+- Fully customized per client
+- Require prescription (ordonnance)
+- Stored per eye:
+  - Right eye (OD)
+  - Left eye (OG)
+- Parameters:
+  - Sphere, Cylinder, Axis, Add, Prism, etc.
+- Not part of stock inventory
+- Created per sale
+- Always linked to client + prescription
+
+### B. Standard products
+- Frames (montures)
+- Sunglasses
+- Accessories
+
+Requirements:
+- Managed in stock
+- Real-time quantity tracking
+- Purchase and sales workflows
+
+---
+
+## 2. Stock Management
+
+- Stock increases via purchases
+- Stock decreases via sales
+- Every movement must be traceable
+- Every movement linked to invoices
+- Multi-store support (future-ready)
+
+---
+
+## 3. Sales Workflow (CRITICAL)
+
+Implement full optical workflow:
+
+1. Create quotation (devis)
+2. Validate quotation
+3. Attach prescription
+4. Optional: order lenses
+5. Deliver products
+6. Generate invoice
+
+Rules:
+- Linked to client
+- Can include optical + standard products
+- Automatic VAT calculation
+- Automatic accounting entries generation
+
+---
+
+## 4. Purchases
+
+- Supplier management
+- Purchase invoices
+- Stock updated after validation only
+
+---
+
+## 5. Client Management
+
+- Client profiles
+- History:
+  - Prescriptions
+  - Purchases
+- Multiple prescriptions per client over time
+- Optional medical notes
+
+---
+
+## 6. Payments
+
+Support multiple payment methods:
+- Cash
+- Card
+- Credit (partial payments)
+
+Payment statuses:
+- Paid
+- Partially paid
+- Unpaid
+
+---
+
+## 7. Accounting (Moroccan Compliance)
+
+- Moroccan Chart of Accounts (Plan Comptable Marocain)
+- Automatic journal entries for:
+  - Sales
+  - Purchases
+  - Payments
+
+### VAT (TVA)
+- TVA collectée (sales VAT)
+- TVA déductible (purchase VAT)
+- VAT declaration reports generation
+
+---
+
+## 8. Reporting & Analytics
+
+- Daily / monthly sales reports
+- Top-selling products
+- Revenue and margin analysis
+- VAT summaries
+
+---
+
+## 9. SaaS Multi-Tenant Architecture
+
+- Each optical store is an isolated tenant
+- Secure authentication system
+- Role-based access control
+
+---
+
+# 🔐 ROLES
+
+- Admin (platform owner)
+- Shop Manager
+- Optician
+- Accountant
+
+---
+
+# 🧱 TECH STACK (justify choices)
+
+- Backend: NestJS (Node.js) OR Django
+- Frontend: Next.js (React)
+- Database: PostgreSQL
+- Architecture: Multi-tenant SaaS (clean architecture / DDD preferred)
+
+---
+
+# 🎨 UI/UX REQUIREMENTS
+
+- Language: French (default)
+- Currency: DH format (e.g., 1 400,00 DH)
+- Date format: dd/mm/yyyy
+- Modern, clean dashboard UI
+
+---
+
+# 📦 DELIVERABLES
+
+Provide step-by-step output:
+
+1. Full system architecture
+2. Detailed database schema
+3. API design (REST or GraphQL)
+4. UI pages structure
+5. Implementation roadmap (step-by-step)
+6. Start coding core modules:
+   - Authentication
+   - Clients
+   - Products
+   - Prescriptions
+   - Sales workflow
+   - Invoices
+   - Payments
+
+---
+
+# ⚠️ CONSTRAINTS
+
+- Use Clean Architecture (prefer DDD)
+- Scalable and production-ready
+- Secure and maintainable code
+- Do NOT skip design phase
+
+---
+
+# 🚀 EXECUTION ORDER
+
+Start strictly in this order:
+
+1. Architecture design
+2. Database schema
+3. Core modules implementation
+
+Wait for structured output and think like a senior engineer building a real SaaS product.

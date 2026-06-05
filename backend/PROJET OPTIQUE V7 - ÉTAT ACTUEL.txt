@@ -1,0 +1,103 @@
+PROJET OPTIQUE V7 - ÉTAT ACTUEL
+Stack technique
+Frontend : React 18 + TypeScript + Ant Design 5
+
+Backend : Node.js + Express + PostgreSQL
+
+Base de données : ERP_OptiqueV7 (PostgreSQL)
+
+Ports : Backend 3000, Frontend 3001
+
+Architecture
+Multi-tenant avec header X-Tenant-Id
+
+Isolation des données par tenant
+
+Séparation stricte vente / fournisseur (RGPD)
+
+Fonctionnalités terminées
+Backend (server.js)
+✅ Routes CRUD pour : produits, ventes, clients, ordonnances
+
+✅ Routes pour commandes de verres (/api/orders/sales)
+
+✅ Routes pour fournisseur (/api/orders/supplier/orders)
+
+✅ Routes pour prix (/api/pricing) - GET et PUT
+
+✅ Routes pour traitements (/api/coatings) - GET et PUT
+
+✅ Routes pour statistiques (/api/stats)
+
+✅ Tables PostgreSQL : products, sales, clients, prescriptions, supplier_orders, price_grid, coating_pricing
+
+Frontend
+✅ Dashboard avec statistiques
+
+✅ Gestion des clients (CRUD + ordonnances)
+
+✅ Commande de verres optiques (sélection client → ordonnance → configuration OD/OG)
+
+✅ Caisse enregistreuse
+
+✅ Gestion des ventes
+
+✅ Gestion des produits
+
+✅ Commandes fournisseur (visualisation + suivi statut)
+
+✅ Gestion des prix (verres + traitements)
+
+✅ Format devise : DH (Dirhams marocains)
+
+✅ Format date : dd/mm/yyyy
+
+Problème résolu à l'instant
+✅ Modification des prix avec virgule (ex: 124,50) fonctionnelle
+
+✅ Conversion virgule ↔ point dans le backend
+
+✅ Backend stable sur port 3000
+
+À faire / Prochaines étapes possibles
+Authentification JWT - Login, rôles (admin/opticien)
+
+Export PDF des factures - Conformité marocaine
+
+Dashboard avec graphiques - Recharts.js
+
+Notifications en temps réel - WebSockets
+
+Factures fournisseur - Cycle complet commande → facture → paiement
+
+Dockerisation - docker-compose pour déploiement
+
+Tests unitaires - Jest pour backend et frontend
+
+Commandes pour démarrer
+bash
+# Backend
+cd C:\projets\app-OptiqueV7\backend
+node server.js
+
+# Frontend
+cd C:\projets\app-OptiqueV7\frontend
+npm start
+Accès
+Frontend : http://localhost:3001
+
+Backend API : http://localhost:3000
+
+Health check : http://localhost:3000/health
+
+Base de données
+Nom : ERP_OptiqueV7
+
+User : postgres
+
+Password : Bismilah*76
+
+Port : 5432
+
+🎯 Ce que tu peux demander au prochain agent
+"Continue le projet Optique V7. L'application est fonctionnelle avec gestion des clients, verres optiques, commandes fournisseur, et modification des prix avec virgule. Je veux maintenant ajouter [la fonctionnalité que tu souhaites]. Voici le prompt avec l'état actuel du projet."

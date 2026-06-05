@@ -1,0 +1,102 @@
+Nouvelles tables (Core) vs Anciennes tables
+Nouvelle table (à garder)	Ancienne table (à supprimer)	Statut
+core_sales_order	sales_orders	✅ Active
+core_sales_order_item	sales_order_items	✅ Active
+core_optical_job	lens_orders	✅ Active
+core_invoices	sales_invoices	✅ Active
+core_invoice_items	sales_invoice_items	✅ Active
+core_payments	payments	✅ Active
+core_stock_movements	stock_movements	🔄 À fusionner
+core_tenants	tenant_id (dispersé)	🔄 À créer
+🗑️ Tables à supprimer (après migration)
+Groupe Vente (à supprimer)
+sql
+-- Remplacées par core_sales_order et core_sales_order_item
+DROP TABLE IF EXISTS sales_orders CASCADE;
+DROP TABLE IF EXISTS sales_order_items CASCADE;
+DROP TABLE IF EXISTS sales CASCADE;
+DROP TABLE IF EXISTS sale_items CASCADE;
+DROP TABLE IF EXISTS sales_documents CASCADE;
+DROP TABLE IF EXISTS invoice_lines CASCADE;
+Groupe Facturation (à supprimer)
+sql
+-- Remplacées par core_invoices et core_invoice_items
+DROP TABLE IF EXISTS sales_invoices CASCADE;
+DROP TABLE IF EXISTS sales_invoice_items CASCADE;
+Groupe Paiements (à supprimer)
+sql
+-- Remplacée par core_payments
+DROP TABLE IF EXISTS payments CASCADE;
+Groupe Verres (à supprimer)
+sql
+-- Remplacée par core_optical_job
+DROP TABLE IF EXISTS lens_orders CASCADE;
+Groupe Stock (à fusionner)
+sql
+-- À fusionner dans core_stock_movements
+-- Conserver l'ancienne temporairement
+-- DROP TABLE IF EXISTS stock_movements; (à faire plus tard)
+🔄 Tables à fusionner
+Tables à fusionner	Table cible	Colonnes à garder
+stock_movements + product_stock_view	core_stock_movements	id, product_id, type, quantity, created_at
+supplier_orders + supplier_orders_archive	core_supplier_orders	order_id, supplier_id, status, items
+supplier_invoices + supplier_invoice_items	core_supplier_invoices	invoice_number, amount_ht, amount_tva
+📁 Tables à conserver (inchangées)
+sql
+-- Clients et prescriptions
+clients
+prescriptions
+
+-- Produits
+products
+product_variants
+product_images
+product_tags
+
+-- Fournisseurs
+suppliers
+
+-- Comptabilité (à garder)
+accounting_journal
+plan_comptable
+tva_declarations
+tva_declaration_items
+tva_rates
+
+-- Sécurité
+users
+roles
+permissions
+🎯 Plan d'action final
+sql
+-- ÉTAPE 1: Sauvegarder les données
+CREATE SCHEMA IF NOT EXISTS backup_final;
+CREATE TABLE backup_final.sales_orders AS SELECT * FROM sales_orders;
+CREATE TABLE backup_final.sales_invoices AS SELECT * FROM sales_invoices;
+CREATE TABLE backup_final.lens_orders AS SELECT * FROM lens_orders;
+
+-- ÉTAPE 2: Renommer les anciennes tables (au lieu de supprimer)
+ALTER TABLE sales_orders RENAME TO sales_orders_deprecated;
+ALTER TABLE sales_order_items RENAME TO sales_order_items_deprecated;
+ALTER TABLE sales_invoices RENAME TO sales_invoices_deprecated;
+ALTER TABLE sales_invoice_items RENAME TO sales_invoice_items_deprecated;
+ALTER TABLE payments RENAME TO payments_deprecated;
+ALTER TABLE lens_orders RENAME TO lens_orders_deprecated;
+
+-- ÉTAPE 3: Créer des vues pour compatibilité (si nécessaire)
+CREATE OR REPLACE VIEW sales_orders AS SELECT * FROM core_sales_order;
+CREATE OR REPLACE VIEW sales_invoices AS SELECT * FROM core_invoices;
+CREATE OR REPLACE VIEW payments AS SELECT * FROM core_payments;
+
+-- ÉTAPE 4: Après 1 mois de validation, supprimer définitivement
+-- DROP TABLE IF EXISTS sales_orders_deprecated CASCADE;
+-- DROP TABLE IF EXISTS sales_invoices_deprecated CASCADE;
+📊 Résumé des correspondances
+Domaine	Ancien	Nouveau	Action
+Commandes	sales_orders	core_sales_order	Remplacer
+Lignes commande	sales_order_items	core_sales_order_item	Remplacer
+Factures	sales_invoices	core_invoices	Remplacer
+Lignes facture	sales_invoice_items	core_invoice_items	Remplacer
+Paiements	payments	core_payments	Remplacer
+Verres	lens_orders	core_optical_job	Remplacer
+Stock	stock_movements	core_stock_movements	Fusionner
